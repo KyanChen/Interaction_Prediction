@@ -1,0 +1,15 @@
+{
+    "catalysis": 0,
+    "repression": 1,
+    "ptmod": 2,
+    "ubiquitination": 3,
+    "inhibition": 4,
+    "reaction": 5,
+    "compound": 6,
+    "phosphorylation": 7,
+    "state change": 8,
+    "binding": 9,
+    "activation": 10,
+    "dephosphorylation": 11,
+    "expression": 12
+}
