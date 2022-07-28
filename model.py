@@ -77,6 +77,8 @@ class InteractionPredictor(pl.LightningModule):
 
 def train_model(root_dir='EXP1', train_loader=None, val_loader=None, **model_kwargs):
     trainer = pl.Trainer(
+        accelerator='gpu',
+        devices=1,
         default_root_dir=root_dir,
         max_epochs=180,
         callbacks=[
@@ -91,7 +93,7 @@ def train_model(root_dir='EXP1', train_loader=None, val_loader=None, **model_kwa
             TQDMProgressBar()
         ],
     )
-    trainer.logger._log_graph = True  # If True, we plot the computation graph in tensorboard
+    # trainer.logger._log_graph = True  # If True, we plot the computation graph in tensorboard
     trainer.logger._default_hp_metric = None  # Optional logging argument that we don't need
 
     # Check whether pretrained model exists. If yes, load it and skip training
@@ -143,12 +145,12 @@ if __name__ == '__main__':
         data_path='data/train.txt', vocab=vocab_file, interaction2id=interaction2id_file)
     train_loader = utils.data.DataLoader(
         train_dataset,
-        batch_size=128, shuffle=True, drop_last=True, pin_memory=True, num_workers=0)
+        batch_size=1024, shuffle=True, drop_last=True, pin_memory=True, num_workers=4)
     val_dataset = MyDataset(
         data_path='data/val.txt', vocab=vocab_file, interaction2id=interaction2id_file)
     val_loader = utils.data.DataLoader(
         val_dataset,
-        batch_size=128, shuffle=False, drop_last=True, pin_memory=True, num_workers=0)
+        batch_size=1024, shuffle=False, drop_last=True, pin_memory=True, num_workers=4)
     model_kwargs = dict(lr=1e-4, n_class=num_class, vocab_size=num_vocab)
     model, result = train_model(
         root_dir='results/EXP1', train_loader=train_loader, val_loader=val_loader, **model_kwargs)
