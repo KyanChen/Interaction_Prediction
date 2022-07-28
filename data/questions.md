@@ -23,7 +23,7 @@ Because this interaction is order agnostic, no position encoding is used.
 I separated the all data into a training set and a test set (1w pieces of data), 
 obtained the model parameters on the training set, 
 and tested the model's accuracy on the test set.
-Experiments show that the method can achieve 90% accuracy on the test set without optimizing the network structure.
+Experiments show that the method can achieve 88% accuracy on the test set without optimizing the network structure.
 
 5. What would be the next steps?
 
