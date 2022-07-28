@@ -77,7 +77,7 @@ class InteractionPredictor(pl.LightningModule):
 
 def train_model(root_dir='EXP1', train_loader=None, val_loader=None, **model_kwargs):
     trainer = pl.Trainer(
-        accelerator='gpu',
+        accelerator='cpu',
         devices=1,
         default_root_dir=root_dir,
         max_epochs=180,
@@ -87,7 +87,10 @@ def train_model(root_dir='EXP1', train_loader=None, val_loader=None, **model_kwa
                 dirpath=root_dir+'/checkpoints',
                 filename='epoch_{epoch:02d}_valacc{val_acc:.2f}',
                 auto_insert_metric_name=False,
-                every_n_epochs=10
+                every_n_epochs=10,
+                save_last=True,
+                save_top_k=5,
+                mode='max'
             ),
             LearningRateMonitor("epoch"),
             TQDMProgressBar()
