@@ -1,5 +1,0 @@
-lr: 0.0001
-n_class: 13
-vocab_size: 14865
-model_dim: 256
-num_encoder_layers: 3
