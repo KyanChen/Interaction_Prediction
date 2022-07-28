@@ -4,8 +4,6 @@ import torch
 import numpy as np
 from torch import optim, nn, utils, Tensor
 from torch.nn import TransformerEncoderLayer, LayerNorm, TransformerEncoder
-from torchvision.datasets import MNIST
-from torchvision.transforms import ToTensor
 import pytorch_lightning as pl
 from einops import repeat
 import torch.nn.functional as F
@@ -61,10 +59,10 @@ class InteractionPredictor(pl.LightningModule):
         preds = self.forward(x)
         loss = F.cross_entropy(preds, labels)
         acc = (preds.argmax(dim=-1) == labels).float().mean()
-
+        losses = {'loss': loss, 'acc': acc}
         self.log("%s_loss" % mode, loss)
         self.log("%s_acc" % mode, acc)
-        return loss
+        return losses
 
     def _calculate_acc(self, batch, mode="test"):
         x, labels = batch['x'], batch['label']
